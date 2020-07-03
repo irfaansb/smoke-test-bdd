@@ -1,8 +1,8 @@
-# smoke-test-bdd
+## smoke-test-bdd
 
 This BDD framework is to test UserApi.
 There are 4 endpoints that has been Automated: _POST, GET, PUT and DELETE_
-To run  the Smoke Test use the below command:
+#To run  the Smoke Test use the below command:
 Step 1: ./gradlew clean build
 Step 2: ./gradlew smokeTest
  
