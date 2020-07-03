@@ -23,6 +23,6 @@ dependencies {
     compile("com.google.code.gson:gson:2.8.5")
     }
 
-//task acceptanceTest(type: Test, dependsOn: test) {
-//    include "CucumberTest.class"
-//}
+task acceptanceTest(type: Test, dependsOn: test) {
+    include "CucumberTest.class"
+}

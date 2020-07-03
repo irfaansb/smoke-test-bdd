@@ -19,8 +19,6 @@ import static org.assertj.core.api.Assertions.fail;
 
 public class ApiUtil {
 
-    private static final String NULL_VALUE = null;
-
     /**
      * Constructs the header parameters of the API
      *
@@ -29,16 +27,9 @@ public class ApiUtil {
     public static Map<String, String> getHeaders() {
         Map<String, String> headers = new HashMap<>();
         headers.put("Accept", "application/json");
+        headers.put("Content-Type","application/json");
         return headers;
     }
-    /**
-     * Returns the status code of the corresponding HttpsStatus
-     * @param code http code
-     * @return the status code of the http status
-     */
-//    public int getStatusCode(String code) {
-//          return HttpStatus.valueOf(Integer.parseInt(code.substring(5,8))).value);
-//       }
 
     /**
      * Returns the dataTable data in the form of Map
@@ -55,61 +46,28 @@ public class ApiUtil {
         return dataMap;
     }
 
-
     /**
      * This implementation method updates the existing json file content with map of data passed to
      * the method
      *
-     * @param detailsMap a map of data with new request values
      * @param fileName   name of the request file
      * @return updated json file data in String
+     *
+     *
      */
 
-    public String getRequestWithNewValueToTheField( String fileName) {
+    public String readJsonFile(String fileName){
         try {
             byte[] jsonData = Files.readAllBytes(Paths.get(JSON_REQUEST_PATH + fileName + ".json"));
             //create ObjectMapper instance
             ObjectMapper objectMapper = new ObjectMapper();
             //read JSON like DOM Parser
             JsonNode rootNode = objectMapper.readTree(jsonData);
-            JsonNode userInfoNode = rootNode.path("user");
-//            if(detailsMap.containsKey("email")){
-//                ((ObjectNode) userInfoNode).put("email", detailsMap.get("email"));
-//            }
-//            if(detailsMap.containsKey("first_name")){
-//                ((ObjectNode) userInfoNode).put("first_name", detailsMap.get("first_name"));
-//            }
-//            if(detailsMap.containsKey("last_name")){
-//                ((ObjectNode) userInfoNode).put("last_name", detailsMap.get("last_name"));
-//            }
-//            if(detailsMap.containsKey("last_name")){
-//                ((ObjectNode) userInfoNode).put("password", detailsMap.get("password"));
-//            }
             return rootNode.toString();
-        } catch (IOException exe) {
-           fail("Exception occured", exe);
-        }
-        return null;
+
+    } catch (IOException exe) {
+        fail("Exception occured", exe);
     }
-
-    public Map<String, String> generateHeaders(DataTable table) {
-        Map<String, String> validHeaders = getHeaders();
-
-        List<List<String>> headerTable = table.raw();
-
-        for (List<String> header : headerTable) {
-            validHeaders.replace(header.get(0),header.get(1));
-        }
-        return validHeaders;
+    return null;
     }
-
-    private void updateMapWithNewValue(String keyToBeUpdated, String newValue, Map map) {
-        if (keyToBeUpdated.equals(FIRST_NAME) || keyToBeUpdated.equals(LAST_NAME)
-                || keyToBeUpdated.equals(EMAIL_ID)) {
-            map.put(keyToBeUpdated,newValue);
-
-        }
-    }
-
-
 }
